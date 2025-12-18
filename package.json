@@ -18,10 +18,16 @@
   "homepage": "https://github.com/hungit-dev/express-backend-boilerplate#readme",
   "description": "",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "prisma": "^7.2.0"
   }
 }
