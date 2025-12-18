@@ -8,9 +8,9 @@ const indexRouter = require("./routes/indexRouter");
 
 const app = express();
 /*use passport and store sessions in memory*/
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
+ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+ app.use(passport.initialize());
+ app.use(passport.session());
 
 /*look and render ejs files*/
 app.set("views", path.join(__dirname, "views"));

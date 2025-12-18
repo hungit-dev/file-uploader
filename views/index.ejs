@@ -1,14 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="light">
 
 <head>
     <title>
-        Form
+        file-uploader
     </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
-<body>
-    <h1>Hello World!</h1>
+<body class="d-flex flex-column">
+    <header class="container-fluid ">
+        <nav class="navbar navbar-expand-lg  container">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <img src="/img/logo.webp" class="rounded-circle" alt="logo">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mt-2 mt-lg-0">
+                        <li class="nav-item d-flex align-items-center">
+                            <span class="d-lg-none me-2">Change Theme</span>
+                            <i class="bi bi-sun fs-5"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link d-lg-none ">
+                                Log in
+                            </a>
+
+                            <a href="#" class="btn d-none d-lg-inline-block ms-lg-2  log-in-btn">
+                                Log in
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link d-lg-none">
+                                Sign up
+                            </a>
+
+                            <a href="#" class="btn  d-none d-lg-inline-block ms-lg-2 sign-up-btn">
+                                Sign up
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container-fluid flex-grow-1 d-flex  justify-content-center text-center">
+        <div class="container">
+
+            <h1 class="fs-1 fw-bold">Online storage for everyone
+            </h1>
+            <p>Effortlessly upload your files, organize them, and share with anyone, anywhere. Secure, fast, and
+                simple—just the way file sharing should be.</p>
+            <button type="button" class="btn btn-warning">Try for free</button>
+
+        </div>
+
+    </main>
+    <footer class="container-fluid text-center">
+        <p>Made by @lamnhathunghuynh</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,70 @@
+html[data-bs-theme="dark"] {
+    --bg-color: #18181B;
+    --border-bottom-color: 1px solid rgba(255, 255, 255, 0.2);
+    --log-in-btn-bg: #18181B;
+    --log-in-btn-color: white;
+    --log-in-border: 1px solid rgba(255, 255, 255, 0.2);
+    --sign-up-btn-bg: white;
+    --sign-up-btn-color: black;
+    --theme-toggler-text-color: rgba(255, 255, 255, 0.65)
+}
+
+html[data-bs-theme="light"] {
+    --bg-color: #FAFAFA;
+    --border-bottom-color: 1px solid rgba(0, 0, 0, 0.1);
+    --log-in-btn-bg: #FAFAFA;
+    --log-in-btn-color: black;
+    --log-in-border: 1px solid rgba(0, 0, 0, 0.1);
+    --sign-up-btn-bg: #18181B;
+    --sign-up-btn-color: white;
+    --theme-toggler-text-color: rgba(0, 0, 0, 0.65)
+}
+
+html {
+    background-color: var(--bg-color);
+}
+
+body {
+    height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: var(--bg-color);
+    border-bottom: var(--border-bottom-color);
+
+}
+
+header img {
+    width: 40px;
+    height: 40px;
+}
+
+.log-in-btn {
+    background-color: var(--log-in-btn-bg);
+    color: var(--log-in-btn-color);
+    border: var(--log-in-border);
+}
+
+.sign-up-btn {
+    background-color: var(--sign-up-btn-bg);
+    color: var(--sign-up-btn-color)
+}
+
+header span {
+    color: var(--theme-toggler-text-color)
+}
+
+/* Main */
+main {
+    background-color: var(--bg-color);
+}
+
+main>div {
+    margin-top: 10rem;
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-color);
+}
