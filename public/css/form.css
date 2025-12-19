@@ -1,0 +1,32 @@
+html[data-bs-theme="dark"] form input[class="form-control"] {
+    background-color: #27272A;
+
+}
+
+html form input[class="form-control"]:focus {
+    box-shadow: none;
+    border-color: #65A30D;
+}
+
+
+main div[class="container"] {
+    max-width: 500px;
+}
+
+main div form button[type="submit"] {
+    --bs-btn-bg: #65A30D;
+    border: none;
+}
+
+main div form button[type="submit"]:hover {
+    --bs-btn-hover-bg: #4D7C0F;
+}
+
+main div form button[type="submit"]:active {
+    --bs-btn-active-bg: #3F6212;
+}
+
+main div form button[type="submit"]:focus {
+    background-color: #65A30D;
+    box-shadow: none;
+}
