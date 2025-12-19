@@ -11,5 +11,7 @@ indexRouter.get("/sign-up",(req,res)=>{
 indexRouter.get("/log-in",(req,res)=>{
   res.render("log-in-page")
 })
-
+indexRouter.get("/dashboard",(req,res)=>{
+  res.render("dashboard")
+})
 module.exports = indexRouter;
