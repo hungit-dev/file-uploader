@@ -58,28 +58,31 @@
     </header>
     <main class="container-fluid flex-grow-1 d-flex  justify-content-center ">
         <div class="container">
-            <form class="border rounded p-5">
+            <form class="border rounded p-5" method="post" action="/sign-up">
                 <h1 class="text-center fs-3">Sign up</h1>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label mb-1 text-secondary">Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Email</label>
-                    <input type="email" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Confirm Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-                <p class="text-center fs-7 mt-2">Already have an account? <a href="/log-in"
-                        class="text-decoration-underline">Log
-                        in</a></p>
+                <%- include('../partials/errors') %>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label mb-1 text-secondary">Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Username</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label mb-1 text-secondary">Confirm
+                            Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="confirm-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    <p class="text-center fs-7 mt-2">Already have an account? <a href="/log-in"
+                            class="text-decoration-underline">Log
+                            in</a></p>
             </form>
         </div>
     </main>

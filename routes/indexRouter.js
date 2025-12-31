@@ -1,17 +1,19 @@
 const { Router } = require("express");
 const indexRouter = Router();
-const controller = require("../controllers/indexController");
+const {validateSignUpForm,createNewUser,renderDashboardPage,renderLogInPage,renderSignUpPage,logInUser,renderHomePage}=require("../controllers/userControllers")
+indexRouter.get("/", renderHomePage);
+indexRouter.get("/sign-up",renderSignUpPage)
+indexRouter.post("/sign-up",validateSignUpForm,createNewUser)
+indexRouter.get("/log-in",renderLogInPage)
+indexRouter.post("/log-in",logInUser)
+indexRouter.get("/dashboard",renderDashboardPage)
 
-indexRouter.get("/", (req, res) => {
-  res.render("index");
+indexRouter.get("/log-out", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
-indexRouter.get("/sign-up",(req,res)=>{
-  res.render("sign-up-page")
-})
-indexRouter.get("/log-in",(req,res)=>{
-  res.render("log-in-page")
-})
-indexRouter.get("/dashboard",(req,res)=>{
-  res.render("dashboard")
-})
 module.exports = indexRouter;
