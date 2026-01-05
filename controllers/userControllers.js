@@ -116,6 +116,10 @@ const logInUser=(req, res, next) => {
     });
   })(req, res, next);
 }
+const handleUploadFile=(req, res, next) =>{
+ console.log(req.file)
+ res.redirect("/dashboard")
+}
 module.exports = {
   validateSignUpForm,
   createNewUser,
@@ -123,5 +127,6 @@ module.exports = {
   renderLogInPage,
   renderSignUpPage,
   logInUser,
-  renderHomePage
+  renderHomePage,
+  handleUploadFile
 };
