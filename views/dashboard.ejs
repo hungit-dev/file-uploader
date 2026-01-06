@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
 
 <body class="d-flex flex-column">
@@ -61,8 +62,8 @@
             <div class="d-flex flex-row align-items-center gap-4 mt-0 p-4 ps-0">
                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#uploadFile"><i
                         class="bi bi-cloud-upload me-2"></i>Upload</button>
-                <button type="button" class="btn new-folder-btn" data-bs-toggle="modal"
-                    data-bs-target="#createFolder"><i class="bi bi-folder-plus me-2"></i>New folder</button>
+                <button type="button" class="btn new-folder-btn" data-bs-toggle="modal" data-bs-target="#fileInfo"><i
+                        class="bi bi-folder-plus me-2"></i>New folder</button>
             </div>
             <div>
                 <h1 class="fs-5">Cloud drive</h1>
@@ -73,12 +74,12 @@
             </div>
         </div>
 
-        <!-- Upload Model-->
-        <form class="modal fade" id="uploadFile" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true"
-            action="/file-upload" method="post" enctype="multipart/form-data">
+        <!-- Upload Model + inline Css-->
+        <form class="modal fade upload-modal" id="uploadFile" tabindex="-1" aria-labelledby="uploadModalLabel"
+            aria-hidden="true" action="/file-upload" method="post" enctype="multipart/form-data">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="border: none;">
+                    <div class="modal-header">
                         <h2 class="modal-title fs-4" id="uploadModalLabel">
                             Upload Files
                         </h2>
@@ -88,23 +89,22 @@
                     <div class="modal-body pt-0 pb-0">
                         <input class="form-control" type="file" id="formFile" name="file">
                     </div>
-                    <div class="modal-footer" style="border: none;">
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="submit" class="btn"
-                            style="background-color: #65A30D; color: white;">Upload</button>
+                        <button type="submit" class="btn">Upload</button>
                     </div>
                 </div>
             </div>
         </form>
 
-        <!-- Create Folder Modal-->
-        <form class="modal fade " id="createFolder" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true"
-            action="/file-upload" method="post" enctype="multipart/form-data">
-            <div class="modal-dialog" style="margin-top: 200px; max-width: 400px;">
+        <!-- Create Folder Modal + inline Css-->
+        <form class="modal fade create-folder-modal" id="createFolder" tabindex="-1" aria-labelledby="uploadModalLabel"
+            aria-hidden="true" action="/create-folder" method="post" enctype="multipart/form-data">
+            <div class="modal-dialog">
                 <div class="modal-content p-3">
-                    <div class="modal-header p-0 pb-2" style="border: none;">
+                    <div class="modal-header p-0 pb-2">
                         <h2 class="text-center modal-title w-100 fs-4">Create folder</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -114,6 +114,83 @@
                 </div>
             </div>
         </form>
+
+        <!-- File Info + inline Css-->
+        <div class="modal fade file-info-modal" id="fileInfo" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">File Info</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center flex-column">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-file-icon lucide-file text-zinc-500 text-secondary mb-5">
+                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                        </svg>
+                        <div class="fields">
+                            <div class="field">
+                                <p>Name:</p>
+                                <p class="text-secondary">ConferenceEvents-SpecSheet-DowTheatre-Web.pdf</p>
+                            </div>
+                            <div class="field">
+                                <p>Path:</p>
+                                <p class="cloud-drive-url">Cloud drive</p>
+                            </div>
+                            <div class="field">
+                                <p>Size:</p>
+                                <p class="text-secondary">1.37MB</p>
+                            </div>
+                            <div class="field">
+                                <p>Type:</p>
+                                <p class="text-secondary">PDF File</p>
+                            </div>
+                            <div class="field">
+                                <p>Date created:</p>
+                                <p class="text-secondary">2026-01-05, 13:36:06</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <span>
+                            <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 11v6"></path>
+                                <path d="M14 11v6"></path>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                                <path d="M3 6h18"></path>
+                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </span>
+                        <span>
+                            <svg class="lucide lucide-share-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                            </svg>
+                        </span>
+                        <span>
+                            <svg class="lucide lucide-download" xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 15V3"></path>
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <path d="m7 10 5 5 5-5"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
     <footer class="container-fluid text-center">
         <p>Made by @lamnhathunghuynh</p>

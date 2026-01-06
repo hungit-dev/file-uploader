@@ -1,0 +1,59 @@
+.upload-modal .modal-header,
+.upload-modal .modal-footer,
+.file-info-modal .modal-header {
+    border: none;
+}
+
+.upload-modal button[type="submit"],
+.create-folder-modal button[type="submit"] {
+    background-color: #65A30D;
+    color: white;
+}
+
+.create-folder-modal .modal-dialog {
+    margin-top: 200px;
+    max-width: 400px;
+}
+
+
+
+.create-folder-modal .modal-header {
+    border: none;
+}
+
+.file-info-modal .modal-dialog {
+    max-width: 400px;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.file-info-modal .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-info-modal .fields .field p:nth-child(1) {
+    margin-bottom: 0;
+}
+
+.file-info-modal p.cloud-drive-url {
+    color: #65A30D;
+    cursor: pointer;
+}
+
+.file-info-modal p.cloud-drive-url:hover {
+    text-decoration: underline;
+}
+
+.file-info-modal .modal-footer span {
+    padding: 3px;
+}
+
+.file-info-modal .modal-footer span:hover {
+    background-color: #E4E4E7;
+    cursor: pointer;
+}
