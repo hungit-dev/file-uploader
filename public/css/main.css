@@ -4,6 +4,10 @@ html[data-bs-theme="dark"] {
     --log-in-btn-bg: #18181B;
     --log-in-btn-color: white;
     --log-in-border: 1px solid rgba(255, 255, 255, 0.2);
+    --new-folder-btn-border: 1px solid rgba(255, 255, 255, 0.2);
+    --item-icon-border: 1px solid rgba(255, 255, 255, 0.2);
+    --item-icon-bg: #18181B;
+    --item-icon-hover-bg: #141E26;
     --sign-up-btn-bg: white;
     --sign-up-btn-color: black;
     --theme-toggler-text-color: rgba(255, 255, 255, 0.65)
@@ -15,6 +19,10 @@ html[data-bs-theme="light"] {
     --log-in-btn-bg: #FAFAFA;
     --log-in-btn-color: black;
     --log-in-border: 1px solid rgba(0, 0, 0, 0.1);
+    --new-folder-btn-border: 1px solid rgba(0, 0, 0, 0.1);
+    --item-icon-border: 1px solid rgba(0, 0, 0, 0.1);
+    --item-icon-bg: #FAFAFA;
+    --item-icon-hover-bg: #F0F9FF;
     --sign-up-btn-bg: #18181B;
     --sign-up-btn-color: white;
     --theme-toggler-text-color: rgba(0, 0, 0, 0.65)

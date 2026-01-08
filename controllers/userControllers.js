@@ -80,7 +80,7 @@ const renderLogInPage=(req,res)=>{
 }
 const renderDashboardPage=(req,res)=>{
     try{
-      return res.render("dashboard",{username:req.user.name})
+      return res.render("dashboard",{username:req.user.name,files:false})
     }catch(e){
       console.log(e)
     }
@@ -119,6 +119,11 @@ const logInUser=(req, res, next) => {
 const handleUploadFile=(req, res, next) =>{
  console.log(req.file)
  res.redirect("/dashboard")
+}
+
+const createNewFolder=(req,res)=>{
+  const userId=req.user.id;
+
 }
 module.exports = {
   validateSignUpForm,

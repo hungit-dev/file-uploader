@@ -1,3 +1,68 @@
+html[data-bs-theme="dark"] main a {
+    color: #ffffff;
+}
+
+html[data-bs-theme="light"] main a {
+    color: #212529;
+}
+
 main div .new-folder-btn {
-    border: var(--log-in-border);
+    border: var(--new-folder-btn-border);
+}
+
+main .item {
+    min-width: 200px;
+    flex-grow: 1;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+main .items-container {
+    display: flex;
+    flex-direction: row;
+}
+
+main .item-icon {
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--item-icon-bg);
+    height: 100%;
+    border: var(--item-icon-border);
+    border-radius: 6px;
+}
+
+main .item-icon:hover {
+    border-color: #38BDF8;
+    cursor: pointer;
+    background-color: var(--item-icon-hover-bg);
+}
+
+main .item-icon svg {
+    width: 50px;
+    height: 50px;
+    color: #38BDF8;
+}
+
+main .item p {
+    text-align: center;
+}
+
+@media (max-width:565px) {
+    main .item {
+        max-width: 100px
+    }
+}
+
+@media (max-width:465px) {
+    main .item {
+        min-width: 100%;
+    }
+
+    main .items-container {
+        flex-direction: column;
+    }
 }
