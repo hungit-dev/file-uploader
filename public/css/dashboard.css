@@ -1,68 +1,67 @@
 html[data-bs-theme="dark"] main a {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 html[data-bs-theme="light"] main a {
-    color: #212529;
+  color: #212529;
 }
 
 main div .new-folder-btn {
-    border: var(--new-folder-btn-border);
+  border: var(--new-folder-btn-border);
 }
 
 main .item {
-    min-width: 200px;
-    flex-grow: 1;
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+  width: 200px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 main .items-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 main .item-icon {
-    min-height: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--item-icon-bg);
-    height: 100%;
-    border: var(--item-icon-border);
-    border-radius: 6px;
+  min-height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--item-icon-bg);
+  height: 100%;
+  border: var(--item-icon-border);
+  border-radius: 6px;
 }
 
 main .item-icon:hover {
-    border-color: #38BDF8;
-    cursor: pointer;
-    background-color: var(--item-icon-hover-bg);
+  border-color: #38bdf8;
+  cursor: pointer;
+  background-color: var(--item-icon-hover-bg);
 }
 
 main .item-icon svg {
-    width: 50px;
-    height: 50px;
-    color: #38BDF8;
+  width: 50px;
+  height: 50px;
+  color: #38bdf8;
 }
 
 main .item p {
-    text-align: center;
+  text-align: center;
 }
 
-@media (max-width:565px) {
-    main .item {
-        max-width: 100px
-    }
+@media (max-width: 565px) {
+  main .item {
+    max-width: 100px;
+  }
 }
 
-@media (max-width:465px) {
-    main .item {
-        min-width: 100%;
-    }
+@media (max-width: 480px) {
+  main .item {
+    min-width: 100%;
+  }
 
-    main .items-container {
-        flex-direction: column;
-    }
+  main .items-container {
+    flex-direction: column;
+  }
 }

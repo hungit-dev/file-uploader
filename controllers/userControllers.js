@@ -1,13 +1,10 @@
-const { prisma } = require('../lib/prisma.js');
-const bcrypt = require('bcryptjs');
-const { body, validationResult } = require('express-validator');
-const passport=require("../passport-config")
+const { prisma } = require("../lib/prisma.js");
+const bcrypt = require("bcryptjs");
+const { body, validationResult } = require("express-validator");
+const passport = require("../passport-config");
 
 const validateSignUpForm = [
-  body("name")
-    .trim()
-    .notEmpty()
-    .withMessage("Name cannot be empty."),
+  body("name").trim().notEmpty().withMessage("Name cannot be empty."),
   body("username")
     .trim()
     .notEmpty()
@@ -24,29 +21,33 @@ const validateSignUpForm = [
   body("confirm-password")
     .trim()
     .notEmpty()
-    .withMessage("Confirm password cannot be empty")
+    .withMessage("Confirm password cannot be empty"),
 ];
 
-const createNewUser = async (req,res) => {
+const createNewUser = async (req, res) => {
   try {
-  //validate sign up form
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+    //validate sign up form
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
       return res.render("sign-up-page", { errors: errors.array() });
     }
-      if(req.body.password !== req.body["confirm-password"]){
-        return res.render("sign-up-page", { errors: [{msg:"Passwords does not match"}] });
-      }
+    if (req.body.password !== req.body["confirm-password"]) {
+      return res.render("sign-up-page", {
+        errors: [{ msg: "Passwords does not match" }],
+      });
+    }
 
-  //check if user exists
-  const isUserExist = await prisma.user.findUnique({
-    where: {
-      username:req.body.username,
-    },
-})
-  if(isUserExist){
-    res.render("sign-up-page",{errors:[{msg:"username already exists"}]})
-  }
+    //check if user exists
+    const isUserExist = await prisma.user.findUnique({
+      where: {
+        username: req.body.username,
+      },
+    });
+    if (isUserExist) {
+      res.render("sign-up-page", {
+        errors: [{ msg: "username already exists" }],
+      });
+    }
     // hash password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -55,51 +56,61 @@ const createNewUser = async (req,res) => {
       data: {
         name: req.body.name,
         username: req.body.username,
-        password: hashedPassword
-      }
+        password: hashedPassword,
+      },
     });
-    return res.redirect("/log-in")
+    return res.redirect("/log-in");
   } catch (e) {
     console.error(e);
   }
 };
-const renderSignUpPage=(req,res)=>{
-    try{
-      return res.render("sign-up-page",{errors:[]})
-    }catch(e){
-      console.log(e)
-    }
-}
-const renderLogInPage=(req,res)=>{
-    try{
-      const errorMessages = req.flash("error").map(msg => ({ msg }));
-      return res.render("log-in-page",{errors:errorMessages})
-    }catch(e){
-      console.log(e)
-    }
-}
-const renderDashboardPage=(req,res)=>{
-    try{
-      return res.render("dashboard",{username:req.user.name,files:false})
-    }catch(e){
-      console.log(e)
-    }
-}
-const renderHomePage=(req,res)=>{
-  try{
-    if(req.user){
-      return res.redirect("/dashboard")
-    }else{
-      return res.redirect("/log-in")
-    }
-  }catch(e){
-    console.log(e)
+const renderSignUpPage = (req, res) => {
+  try {
+    return res.render("sign-up-page", { errors: [] });
+  } catch (e) {
+    console.log(e);
   }
-}
-const logInUser=(req, res, next) => {
+};
+const renderLogInPage = (req, res) => {
+  try {
+    const errorMessages = req.flash("error").map((msg) => ({ msg }));
+    return res.render("log-in-page", { errors: errorMessages });
+  } catch (e) {
+    console.log(e);
+  }
+};
+const renderDashboardPage = async (req, res) => {
+  try {
+    const folders = await prisma.folder.findMany({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    console.log(folders);
+    return res.render("dashboard", {
+      username: req.user.name,
+      files: false,
+      items: folders,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+const renderHomePage = (req, res) => {
+  try {
+    if (req.user) {
+      return res.redirect("/dashboard");
+    } else {
+      return res.redirect("/log-in");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+const logInUser = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
-    
+
     if (!user) {
       req.flash("error", info.message);
       // Force session save before redirect
@@ -107,7 +118,7 @@ const logInUser=(req, res, next) => {
         res.redirect("/log-in");
       });
     }
-    
+
     req.logIn(user, (err) => {
       if (err) return next(err);
       req.session.save(() => {
@@ -115,16 +126,23 @@ const logInUser=(req, res, next) => {
       });
     });
   })(req, res, next);
-}
-const handleUploadFile=(req, res, next) =>{
- console.log(req.file)
- res.redirect("/dashboard")
-}
+};
+const handleUploadFile = (req, res, next) => {
+  console.log(req.file);
+  res.redirect("/dashboard");
+};
 
-const createNewFolder=(req,res)=>{
-  const userId=req.user.id;
-
-}
+const createNewFolder = async (req, res) => {
+  const userId = req.user.id;
+  const folderName = req.body["folder-name"];
+  const newFolder = await prisma.folder.create({
+    data: {
+      name: folderName,
+      userId: userId,
+    },
+  });
+  res.redirect("/dashboard");
+};
 module.exports = {
   validateSignUpForm,
   createNewUser,
@@ -133,5 +151,6 @@ module.exports = {
   renderSignUpPage,
   logInUser,
   renderHomePage,
-  handleUploadFile
+  handleUploadFile,
+  createNewFolder,
 };
