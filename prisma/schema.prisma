@@ -32,6 +32,9 @@ model Folder {
   id     Int    @id @default(autoincrement())
   name   String
   file   File[]
+  parentId Int?
+  parent   Folder? @relation("FolderToFolder",fields:[parentId],references:[id])
+  children Folder[] @relation("FolderToFolder")
   userId Int
   user   User   @relation(fields: [userId], references: [id])
 }

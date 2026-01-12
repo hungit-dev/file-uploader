@@ -115,12 +115,7 @@
                         </div>
 
                         <!--view test-->
-                        <%- include('../partials/item-cards',{items:items}) %>
-
-
-
-
-
+                        <%- include('../partials/folder-cards',{folders:folders}) %>
                     </div>
                     <% } %>
         </div>
@@ -152,7 +147,7 @@
 
         <!-- Create Folder Modal -->
         <form class="modal fade create-folder-modal" id="createFolder" tabindex="-1" aria-labelledby="uploadModalLabel"
-            aria-hidden="true" action="/create-folder" method="post">
+            aria-hidden="true" action="/dashboard/folders/create-folder" method="post">
             <div class="modal-dialog">
                 <div class="modal-content p-3">
                     <div class="modal-header p-0 pb-2">

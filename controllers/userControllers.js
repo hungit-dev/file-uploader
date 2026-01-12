@@ -36,7 +36,6 @@ const createNewUser = async (req, res) => {
         errors: [{ msg: "Passwords does not match" }],
       });
     }
-
     //check if user exists
     const isUserExist = await prisma.user.findUnique({
       where: {
@@ -50,7 +49,6 @@ const createNewUser = async (req, res) => {
     }
     // hash password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
     // create user
     const user = await prisma.user.create({
       data: {
@@ -61,41 +59,90 @@ const createNewUser = async (req, res) => {
     });
     return res.redirect("/log-in");
   } catch (e) {
-    console.error(e);
+    console.log(e);
+    res.status(500).send("Server error");
   }
 };
+
 const renderSignUpPage = (req, res) => {
   try {
     return res.render("sign-up-page", { errors: [] });
   } catch (e) {
     console.log(e);
+    res.status(500).send("Server error");
   }
 };
+
 const renderLogInPage = (req, res) => {
   try {
     const errorMessages = req.flash("error").map((msg) => ({ msg }));
     return res.render("log-in-page", { errors: errorMessages });
   } catch (e) {
     console.log(e);
+    res.status(500).send("Server error");
   }
 };
+
 const renderDashboardPage = async (req, res) => {
   try {
     const folders = await prisma.folder.findMany({
+      //find top-level folders
       where: {
         userId: req.user.id,
+        parentId: null,
       },
     });
+    //Set the parent folder to the dashboard folder
+    req.session.currentFolderId = null;
     console.log(folders);
-    return res.render("dashboard", {
-      username: req.user.name,
-      files: false,
-      items: folders,
+    //Save session before rendering view
+    req.session.save((err) => {
+      if (err) {
+        console.log("Session save error:", err);
+        return res.status(500).send("Server error");
+      }
+      return res.render("dashboard-folder-view", {
+        username: req.user.name,
+        files: false,
+        folders: folders,
+      });
     });
   } catch (e) {
     console.log(e);
+    res.status(500).send("Server error");
   }
 };
+
+const renderFolderView = async (req, res) => {
+  try {
+    const parentId = Number(req.params.parentId);
+    const folders = await prisma.folder.findMany({
+      where: {
+        userId: req.user.id,
+        parentId: parentId,
+      },
+    });
+    //set the parent folder to the current rendering folder
+    req.session.currentFolderId = parentId;
+    //Make sure the session is saved before rendering view
+    req.session.save((err) => {
+      if (err) {
+        console.log("Session save error:", err);
+        return res.status(500).send("Server error");
+      }
+      console.log(folders);
+      return res.render("dashboard-folder-view", {
+        username: req.user.name,
+        files: false,
+        folders: folders,
+      });
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Server error");
+  }
+};
+
 const renderHomePage = (req, res) => {
   try {
     if (req.user) {
@@ -105,12 +152,13 @@ const renderHomePage = (req, res) => {
     }
   } catch (e) {
     console.log(e);
+    res.status(500).send("Server error");
   }
 };
+
 const logInUser = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
-
     if (!user) {
       req.flash("error", info.message);
       // Force session save before redirect
@@ -118,7 +166,6 @@ const logInUser = (req, res, next) => {
         res.redirect("/log-in");
       });
     }
-
     req.logIn(user, (err) => {
       if (err) return next(err);
       req.session.save(() => {
@@ -127,6 +174,7 @@ const logInUser = (req, res, next) => {
     });
   })(req, res, next);
 };
+
 const handleUploadFile = (req, res, next) => {
   console.log(req.file);
   res.redirect("/dashboard");
@@ -135,18 +183,23 @@ const handleUploadFile = (req, res, next) => {
 const createNewFolder = async (req, res) => {
   const userId = req.user.id;
   const folderName = req.body["folder-name"];
+  const parentFolderId = req.session.currentFolderId;
   const newFolder = await prisma.folder.create({
     data: {
       name: folderName,
       userId: userId,
+      parentId: parentFolderId,
     },
   });
-  res.redirect("/dashboard");
+  if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+  else res.redirect("dashboard");
 };
+
 module.exports = {
   validateSignUpForm,
   createNewUser,
   renderDashboardPage,
+  renderFolderView,
   renderLogInPage,
   renderSignUpPage,
   logInUser,

@@ -4,6 +4,7 @@ const {
   validateSignUpForm,
   createNewUser,
   renderDashboardPage,
+  renderFolderView,
   renderLogInPage,
   renderSignUpPage,
   logInUser,
@@ -11,6 +12,8 @@ const {
   handleUploadFile,
   createNewFolder,
 } = require("../controllers/userControllers");
+
+//implements multer to access uploaded files
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,15 +26,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+//manage routes
 indexRouter.post("/file-upload", upload.single("file"), handleUploadFile);
-
 indexRouter.get("/", renderHomePage);
 indexRouter.get("/sign-up", renderSignUpPage);
 indexRouter.post("/sign-up", validateSignUpForm, createNewUser);
 indexRouter.get("/log-in", renderLogInPage);
 indexRouter.post("/log-in", logInUser);
 indexRouter.get("/dashboard", renderDashboardPage);
-
+indexRouter.get("/dashboard/folders/:parentId", renderFolderView);
 indexRouter.get("/log-out", (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -41,5 +44,5 @@ indexRouter.get("/log-out", (req, res, next) => {
   });
 });
 
-indexRouter.post("/create-folder", createNewFolder);
+indexRouter.post("/dashboard/folders/create-folder", createNewFolder);
 module.exports = indexRouter;
