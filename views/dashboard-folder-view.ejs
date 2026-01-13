@@ -66,7 +66,7 @@
                     data-bs-target="#createFolder"><i class="bi bi-folder-plus me-2"></i>New folder</button>
             </div>
             <div>
-                <a href="/" class="fs-5 text-decoration-none">Cloud drive</a>
+                <%- include('../partials/breadcrumb',{breadcrumbItems:breadcrumbItems}) %>
             </div>
             <% if (files) { %>
                 <div class="flex-grow-1 align-items-center d-flex flex-column mt-5">

@@ -1,0 +1,25 @@
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <% breadcrumbItems.forEach((item,index)=>{ %>
+            <% if(index===breadcrumbItems.length-1) { %>
+                <li class="breadcrumb-item active">
+                    <%=item.name%>
+                </li>
+                <% } else { %>
+                    <% if (item.name==="Dashboard" ) { %>
+                        <li class="breadcrumb-item">
+                            <a href="/dashboard" class="text-decoration-none">
+                                <%= item.name %>
+                            </a>
+                        </li>
+                        <% } else { %>
+                            <li class="breadcrumb-item">
+                                <a href="/dashboard/folders/<%= item.id %>" class="text-decoration-none">
+                                    <%= item.name %>
+                                </a>
+                            </li>
+                            <% } %>
+                                <% } %>
+                                    <% }) %>
+    </ol>
+</nav>

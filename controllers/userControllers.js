@@ -2,6 +2,7 @@ const { prisma } = require("../lib/prisma.js");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("../passport-config");
+const { getFolderHierarchy } = require("../models/folder.js");
 
 const validateSignUpForm = [
   body("name").trim().notEmpty().withMessage("Name cannot be empty."),
@@ -94,7 +95,6 @@ const renderDashboardPage = async (req, res) => {
     });
     //Set the parent folder to the dashboard folder
     req.session.currentFolderId = null;
-    console.log(folders);
     //Save session before rendering view
     req.session.save((err) => {
       if (err) {
@@ -105,6 +105,7 @@ const renderDashboardPage = async (req, res) => {
         username: req.user.name,
         files: false,
         folders: folders,
+        breadcrumbItems: [{ name: "Dashboard" }],
       });
     });
   } catch (e) {
@@ -125,16 +126,22 @@ const renderFolderView = async (req, res) => {
     //set the parent folder to the current rendering folder
     req.session.currentFolderId = parentId;
     //Make sure the session is saved before rendering view
-    req.session.save((err) => {
+    req.session.save(async (err) => {
       if (err) {
         console.log("Session save error:", err);
         return res.status(500).send("Server error");
       }
-      console.log(folders);
+      //test
+      const breadcrumbItems = await getFolderHierarchy(
+        req.user.id,
+        req.session.currentFolderId
+      );
+
       return res.render("dashboard-folder-view", {
         username: req.user.name,
         files: false,
         folders: folders,
+        breadcrumbItems: breadcrumbItems,
       });
     });
   } catch (e) {
