@@ -24,7 +24,9 @@ const validateSignUpForm = [
     .notEmpty()
     .withMessage("Confirm password cannot be empty"),
 ];
-
+const renderIndexPage = (req, res) => {
+  return res.render("index");
+};
 const createNewUser = async (req, res) => {
   try {
     //validate sign up form
@@ -92,7 +94,11 @@ const renderDashboardPage = async (req, res) => {
         userId: req.user.id,
         parentId: null,
       },
+      orderBy: {
+        id: "asc",
+      },
     });
+    console.log(folders);
     //Set the parent folder to the dashboard folder
     req.session.currentFolderId = null;
     //Save session before rendering view
@@ -122,6 +128,9 @@ const renderFolderView = async (req, res) => {
         userId: req.user.id,
         parentId: parentId,
       },
+      orderBy: {
+        id: "asc",
+      },
     });
     //set the parent folder to the current rendering folder
     req.session.currentFolderId = parentId;
@@ -134,7 +143,7 @@ const renderFolderView = async (req, res) => {
       //test
       const breadcrumbItems = await getFolderHierarchy(
         req.user.id,
-        req.session.currentFolderId
+        req.session.currentFolderId,
       );
 
       return res.render("dashboard-folder-view", {
@@ -155,7 +164,7 @@ const renderHomePage = (req, res) => {
     if (req.user) {
       return res.redirect("/dashboard");
     } else {
-      return res.redirect("/log-in");
+      return res.redirect("/index");
     }
   } catch (e) {
     console.log(e);
@@ -188,22 +197,61 @@ const handleUploadFile = (req, res, next) => {
 };
 
 const createNewFolder = async (req, res) => {
-  const userId = req.user.id;
-  const folderName = req.body["folder-name"];
-  const parentFolderId = req.session.currentFolderId;
-  const newFolder = await prisma.folder.create({
-    data: {
-      name: folderName,
-      userId: userId,
-      parentId: parentFolderId,
-    },
-  });
-  if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
-  else res.redirect("dashboard");
+  try {
+    const userId = req.user.id;
+    const folderName = req.body["folder-name"];
+    const parentFolderId = req.session.currentFolderId;
+    const newFolder = await prisma.folder.create({
+      data: {
+        name: folderName,
+        userId: userId,
+        parentId: parentFolderId,
+      },
+    });
+    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page
+    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+    else res.redirect("/dashboard");
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Server error");
+  }
 };
-
+const editFolder = async (req, res) => {
+  try {
+    const folderId = Number(req.params.folderId);
+    const folder = await prisma.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        name: req.body["folder-name"],
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Server error");
+  }
+};
+const deleteFolder = async (req, res) => {
+  try {
+    const folderId = Number(req.params.folderId);
+    const parentFolderId = req.session.currentFolderId;
+    const deletedFolder = await prisma.folder.delete({
+      where: {
+        id: folderId,
+      },
+    });
+    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page
+    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+    else res.redirect("/dashboard");
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Server error");
+  }
+};
 module.exports = {
   validateSignUpForm,
+  renderIndexPage,
   createNewUser,
   renderDashboardPage,
   renderFolderView,
@@ -213,4 +261,6 @@ module.exports = {
   renderHomePage,
   handleUploadFile,
   createNewFolder,
+  editFolder,
+  deleteFolder,
 };

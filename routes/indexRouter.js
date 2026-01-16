@@ -2,6 +2,7 @@ const { Router } = require("express");
 const indexRouter = Router();
 const {
   validateSignUpForm,
+  renderIndexPage,
   createNewUser,
   renderDashboardPage,
   renderFolderView,
@@ -11,6 +12,8 @@ const {
   renderHomePage,
   handleUploadFile,
   createNewFolder,
+  editFolder,
+  deleteFolder,
 } = require("../controllers/userControllers");
 
 //implements multer to access uploaded files
@@ -28,6 +31,7 @@ const upload = multer({ storage: storage });
 
 //manage routes
 indexRouter.post("/file-upload", upload.single("file"), handleUploadFile);
+indexRouter.get("/", renderIndexPage);
 indexRouter.get("/", renderHomePage);
 indexRouter.get("/sign-up", renderSignUpPage);
 indexRouter.post("/sign-up", validateSignUpForm, createNewUser);
@@ -43,6 +47,8 @@ indexRouter.get("/log-out", (req, res, next) => {
     res.redirect("/");
   });
 });
-
+indexRouter.get("/dashboard/folders/:folderId/delete", deleteFolder);
 indexRouter.post("/dashboard/folders/create-folder", createNewFolder);
+indexRouter.post("/dashboard/folders/:folderId/edit-folder", editFolder);
+
 module.exports = indexRouter;

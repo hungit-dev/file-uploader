@@ -50,6 +50,20 @@ main .item p {
   text-align: center;
 }
 
+main .item .dropdown {
+  position: relative;
+}
+main .item .dropdown svg {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  color: grey;
+}
+main .item .dropdown svg:hover {
+  cursor: pointer;
+  color: var(--dropdown-icon-color-hover);
+}
+
 @media (max-width: 565px) {
   main .item {
     max-width: 100px;

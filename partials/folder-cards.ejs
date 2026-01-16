@@ -10,9 +10,29 @@
                     </path>
                 </svg>
             </div>
-            <p>
-                <%=folder.name%>
-            </p>
+            <div class="dropdown">
+                <p>
+                    <%=folder.name%>
+                </p>
+                <svg class="ms-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-ellipsis-icon lucide-ellipsis">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                </svg>
+                <ul class="dropdown-menu">
+                    <!--Rename folder-->
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editFolder">
+                            <i class="bi bi-pencil me-2"></i>Rename
+                        </a></li>
+                    <!--Delete folder-->
+                    <li><a class="dropdown-item" href="/dashboard/folders/<%=folder.id%>/delete"><i
+                                class="bi bi-trash me-2"></i>Delete</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <% }) %>
             <% } %>

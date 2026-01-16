@@ -10,12 +10,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/dashboard-folder.css">
     <link rel="stylesheet" href="/css/form.css">
     <link rel="stylesheet" href="/css/modal.css">
 </head>
 
 <body class="d-flex flex-column">
+    <!--Header-->
     <header class="container-fluid ">
         <nav class="navbar navbar-expand-lg  container">
             <div class="container-fluid">
@@ -53,6 +54,8 @@
             </div>
         </nav>
     </header>
+
+    <!--Main-->
     <main class="container-fluid flex-grow-1 d-flex ">
         <div class="container d-flex flex-column mt-0">
             <div>
@@ -85,10 +88,29 @@
                                     </path>
                                 </svg>
                             </div>
-                            <p>Folder name</p>
+                            <div class="dropdown">
+                                <p>Folder name</p>
+                                <svg class="ms-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis">
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="19" cy="12" r="1"></circle>
+                                    <circle cx="5" cy="12" r="1"></circle>
+                                </svg>
+                                <ul class="dropdown-menu">
+                                    <!--Rename folder-->
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#editFolder">
+                                            <i class="bi bi-pencil me-2"></i>Rename
+                                        </a></li>
+                                    <!--Delete folder-->
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash me-2"></i>Delete</a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
-
-
                         <div class="item">
                             <div class="item-icon">
                                 <svg class="lucide lucide-file w-full h-auto" xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +122,6 @@
                             </div>
                             <p>Folder name</p>
                         </div>
-
                         <div class="item">
                             <div class="item-icon">
                                 <svg class="lucide lucide-image w-full h-auto" xmlns="http://www.w3.org/2000/svg"
@@ -113,13 +134,11 @@
                             </div>
                             <p>Folder name</p>
                         </div>
-
                         <!--view test-->
                         <%- include('../partials/folder-cards',{folders:folders}) %>
                     </div>
                     <% } %>
         </div>
-
         <!-- Upload Model -->
         <form class="modal fade upload-modal" id="uploadFile" tabindex="-1" aria-labelledby="uploadModalLabel"
             aria-hidden="true" action="/file-upload" method="post" enctype="multipart/form-data">
@@ -144,7 +163,6 @@
                 </div>
             </div>
         </form>
-
         <!-- Create Folder Modal -->
         <form class="modal fade create-folder-modal" id="createFolder" tabindex="-1" aria-labelledby="uploadModalLabel"
             aria-hidden="true" action="/dashboard/folders/create-folder" method="post">
@@ -154,13 +172,27 @@
                         <h1 class="text-center modal-title w-100 fs-4">Create folder</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body p-0 pb-3"> <input type="text" class="form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp" name="folder-name"></div>
+                    <div class="modal-body p-0 pb-3"> <input type="text" class="form-control" maxlength="20"
+                            id="exampleInputEmail1" aria-describedby="emailHelp" name="folder-name"></div>
                     <button type="submit" class="btn btn-primary w-100">Create</button>
                 </div>
             </div>
         </form>
-
+        <!--Edit Folder name model-->
+        <form class="modal fade create-folder-modal" id="editFolder" tabindex="-1" aria-labelledby="uploadModalLabel"
+            aria-hidden="true" action="/dashboard/folders/145/edit-folder" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content p-3">
+                    <div class="modal-header p-0 pb-2">
+                        <h1 class="text-center modal-title w-100 fs-4">Edit folder</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0 pb-3"> <input type="text" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" name="folder-name"></div>
+                    <button type="submit" class="btn btn-primary w-100">Rename</button>
+                </div>
+            </div>
+        </form>
         <!-- File Info -->
         <div class="modal fade file-info-modal" id="fileInfo" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -236,8 +268,9 @@
                 </div>
             </div>
         </div>
-
     </main>
+
+    <!--Footer-->
     <footer class="container-fluid text-center">
         <p>Made by @lamnhathunghuynh</p>
     </footer>
