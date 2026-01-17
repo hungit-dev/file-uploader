@@ -31,8 +31,8 @@ const upload = multer({ storage: storage });
 
 //manage routes
 indexRouter.post("/file-upload", upload.single("file"), handleUploadFile);
-indexRouter.get("/", renderIndexPage);
 indexRouter.get("/", renderHomePage);
+indexRouter.get("/index", renderIndexPage);
 indexRouter.get("/sign-up", renderSignUpPage);
 indexRouter.post("/sign-up", validateSignUpForm, createNewUser);
 indexRouter.get("/log-in", renderLogInPage);

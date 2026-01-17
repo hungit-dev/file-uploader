@@ -24,7 +24,9 @@
                 </svg>
                 <ul class="dropdown-menu">
                     <!--Rename folder-->
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editFolder">
+                    <li><a class="dropdown-item rename-folder-btn" href="#" data-bs-toggle="modal"
+                            data-bs-target="#editFolderForm" data-folder-id="<%= folder.id %>"
+                            data-folder-name="<%= folder.name %>">
                             <i class="bi bi-pencil me-2"></i>Rename
                         </a></li>
                     <!--Delete folder-->

@@ -218,6 +218,7 @@ const createNewFolder = async (req, res) => {
 };
 const editFolder = async (req, res) => {
   try {
+    const parentFolderId = req.session.currentFolderId;
     const folderId = Number(req.params.folderId);
     const folder = await prisma.folder.update({
       where: {
@@ -227,6 +228,9 @@ const editFolder = async (req, res) => {
         name: req.body["folder-name"],
       },
     });
+    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page
+    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+    else res.redirect("/dashboard");
   } catch (e) {
     console.log(e);
     res.status(500).send("Server error");
