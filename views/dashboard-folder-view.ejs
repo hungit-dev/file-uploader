@@ -134,141 +134,94 @@
                             </div>
                             <p>Folder name</p>
                         </div>
-                        <!--view test-->
+                        <!--Show all folders that user has-->
                         <%- include('../partials/folder-cards',{folders:folders}) %>
                     </div>
                     <% } %>
         </div>
         <!-- Upload Model -->
-        <form class="modal fade upload-modal" id="uploadFileForm" tabindex="-1" aria-labelledby="uploadModalLabel"
-            aria-hidden="true" action="/file-upload" method="post" enctype="multipart/form-data">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="uploadModalLabel">
-                            Upload Files
-                        </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body pt-0 pb-0">
-                        <input class="form-control" type="file" id="formFile" name="file">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn">Upload</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <!-- Create Folder Modal -->
-        <form class="modal fade create-folder-modal" id="createFolderForm" tabindex="-1"
-            aria-labelledby="uploadModalLabel" aria-hidden="true" action="/dashboard/folders/create-folder"
-            method="post">
-            <div class="modal-dialog">
-                <div class="modal-content p-3">
-                    <div class="modal-header p-0 pb-2">
-                        <h1 class="text-center modal-title w-100 fs-4">Create Folder</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-0 pb-3"> <input type="text" class="form-control" maxlength="20"
-                            id="exampleInputEmail1" aria-describedby="emailHelp" name="folder-name"></div>
-                    <button type="submit" class="btn btn-primary w-100">Create</button>
-                </div>
-            </div>
-        </form>
-        <!--Edit Folder name model-->
-        <form class="modal fade create-folder-modal" id="editFolderForm" tabindex="-1"
-            aria-labelledby="uploadModalLabel" aria-hidden="true" method="post">
-            <div class="modal-dialog">
-                <div class="modal-content p-3">
-                    <div class="modal-header p-0 pb-2">
-                        <h1 class="text-center modal-title w-100 fs-4">Edit Name</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-0 pb-3"> <input type="text" class="form-control" id="editFolderInput"
-                            aria-describedby="emailHelp" name="folder-name"></div>
-                    <button type="submit" class="btn btn-primary w-100">Rename</button>
-                </div>
-            </div>
-        </form>
-        <!-- File Info -->
-        <div class="modal fade file-info-modal" id="fileInfo" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title" id="exampleModalLabel">File Info</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center flex-column">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-file-icon lucide-file text-zinc-500 text-secondary mb-5">
-                            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-                            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-                        </svg>
-                        <div class="fields">
-                            <div class="field">
-                                <p>Name:</p>
-                                <p class="text-secondary">ConferenceEvents-SpecSheet-DowTheatre-Web.pdf</p>
-                            </div>
-                            <div class="field">
-                                <p>Path:</p>
-                                <p class="cloud-drive-url">Cloud drive</p>
-                            </div>
-                            <div class="field">
-                                <p>Size:</p>
-                                <p class="text-secondary">1.37MB</p>
-                            </div>
-                            <div class="field">
-                                <p>Type:</p>
-                                <p class="text-secondary">PDF File</p>
-                            </div>
-                            <div class="field">
-                                <p>Date created:</p>
-                                <p class="text-secondary">2026-01-05, 13:36:06</p>
+        <%- include('../partials/upload-modal') %>
+            <!-- Create Folder Modal -->
+            <%- include('../partials/create-folder-modal') %>
+                <!--Edit Folder name model-->
+                <%- include('../partials/edit-folder-name-modal') %>
+                    <!-- File Info -->
+                    <div class="modal fade file-info-modal" id="fileInfo" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title" id="exampleModalLabel">File Info</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body d-flex align-items-center flex-column">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-file-icon lucide-file text-zinc-500 text-secondary mb-5">
+                                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                                        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                                    </svg>
+                                    <div class="fields">
+                                        <div class="field">
+                                            <p>Name:</p>
+                                            <p class="text-secondary">ConferenceEvents-SpecSheet-DowTheatre-Web.pdf</p>
+                                        </div>
+                                        <div class="field">
+                                            <p>Path:</p>
+                                            <p class="cloud-drive-url">Cloud drive</p>
+                                        </div>
+                                        <div class="field">
+                                            <p>Size:</p>
+                                            <p class="text-secondary">1.37MB</p>
+                                        </div>
+                                        <div class="field">
+                                            <p>Type:</p>
+                                            <p class="text-secondary">PDF File</p>
+                                        </div>
+                                        <div class="field">
+                                            <p>Date created:</p>
+                                            <p class="text-secondary">2026-01-05, 13:36:06</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-between">
+                                    <span>
+                                        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="20"
+                                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M10 11v6"></path>
+                                            <path d="M14 11v6"></path>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                                            <path d="M3 6h18"></path>
+                                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                    </span>
+                                    <span>
+                                        <svg class="lucide lucide-share-2" xmlns="http://www.w3.org/2000/svg" width="20"
+                                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="18" cy="5" r="3"></circle>
+                                            <circle cx="6" cy="12" r="3"></circle>
+                                            <circle cx="18" cy="19" r="3"></circle>
+                                            <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                            <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                                        </svg>
+                                    </span>
+                                    <span>
+                                        <svg class="lucide lucide-download" xmlns="http://www.w3.org/2000/svg"
+                                            width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 15V3"></path>
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <path d="m7 10 5 5 5-5"></path>
+                                        </svg>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <span>
-                            <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M10 11v6"></path>
-                                <path d="M14 11v6"></path>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                                <path d="M3 6h18"></path>
-                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            </svg>
-                        </span>
-                        <span>
-                            <svg class="lucide lucide-share-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
-                                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
-                            </svg>
-                        </span>
-                        <span>
-                            <svg class="lucide lucide-download" xmlns="http://www.w3.org/2000/svg" width="20"
-                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 15V3"></path>
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <path d="m7 10 5 5 5-5"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
     <!--Footer-->

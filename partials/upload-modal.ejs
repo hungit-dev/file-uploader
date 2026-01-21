@@ -1,0 +1,27 @@
+<form class="modal fade upload-modal" id="uploadFileForm" tabindex="-1" aria-labelledby="uploadModalLabel"
+    aria-hidden="true" action="/file-upload" method="post" enctype="multipart/form-data">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="uploadModalLabel">
+                    Upload Files
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+
+            <div class="modal-body pt-0 pb-0">
+                <div class="alert alert-danger" role="alert">
+                    Incorrect format!
+                </div>
+                <input class="form-control" type="file" id="formFile" name="file">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" class="btn">Upload</button>
+            </div>
+        </div>
+    </div>
+</form>

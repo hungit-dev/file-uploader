@@ -98,7 +98,6 @@ const renderDashboardPage = async (req, res) => {
         id: "asc",
       },
     });
-    console.log(folders);
     //Set the parent folder to the dashboard folder
     req.session.currentFolderId = null;
     //Save session before rendering view
