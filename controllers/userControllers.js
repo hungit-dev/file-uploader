@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("../passport-config");
 const { getFolderHierarchy } = require("../models/folder.js");
+const cloudinary = require("../cloudinary-config");
+const fs = require("fs");
 
 const validateSignUpForm = [
   body("name").trim().notEmpty().withMessage("Name cannot be empty."),
@@ -190,9 +192,38 @@ const logInUser = (req, res, next) => {
   })(req, res, next);
 };
 
-const handleUploadFile = (req, res, next) => {
-  console.log(req.file);
-  res.redirect("/dashboard");
+const handleUploadFile = async (req, res) => {
+   try {
+   const mimeType = req.file.mimetype;
+
+    // Decide resource type
+    let resourceType = 'auto'; // default
+
+    if (mimeType.startsWith('image/')) {
+      resourceType = 'image';
+    } else if (
+      mimeType.startsWith('application/') || 
+      mimeType.startsWith('text/')
+    ) {
+      resourceType = 'raw'; 
+    } else if (mimeType.startsWith('video/')) {
+      resourceType = 'video';
+    }
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "uploads",
+      resource_type: resourceType,
+    });
+    fs.unlinkSync(req.file.path);
+    const url=result.secure_url;
+    const fileName=req.file.originalname;
+    const size=req.file.size;
+    const folderId=req.session.currentFolderId;
+    console.log(req.file)
+    console.log({url,fileName,size,folderId, resourceType})
+  } catch (err) {
+    console.error('File upload error:', err);
+    res.status(500).send("File upload failed");
+  }
 };
 
 const createNewFolder = async (req, res) => {
