@@ -90,6 +90,8 @@ const renderLogInPage = (req, res) => {
 
 const renderDashboardPage = async (req, res) => {
   try {
+    // Prevent caching to ensure back button reloads the page
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
     const folders = await prisma.folder.findMany({
       //find top-level folders
       where: {
@@ -130,6 +132,8 @@ const renderDashboardPage = async (req, res) => {
 
 const renderFolderView = async (req, res) => {
   try {
+    // Prevent caching to ensure back button reloads the page
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
     const parentId = Number(req.params.parentId);
     const folders = await prisma.folder.findMany({
       where: {
