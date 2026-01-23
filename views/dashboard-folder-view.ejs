@@ -71,71 +71,17 @@
             <div>
                 <%- include('../partials/breadcrumb',{breadcrumbItems:breadcrumbItems}) %>
             </div>
-            <% if (files) { %>
+            <% if (files.length===0 && folders.length===0) { %>
                 <div class="flex-grow-1 align-items-center d-flex flex-column mt-5">
                     <p class="fs-3">Folder is empty</p>
                     <p>You haven't added items to this folder.</p>
                 </div>
                 <% } else { %>
                     <div class="mt-3 d-flex gap-3 flex-wrap items-container">
-                        <div class="item">
-                            <div class="item-icon">
-                                <svg class="lucide lucide-folder w-full h-auto" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path
-                                        d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div class="dropdown">
-                                <p>Folder name</p>
-                                <svg class="ms-5 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
-                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis">
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="19" cy="12" r="1"></circle>
-                                    <circle cx="5" cy="12" r="1"></circle>
-                                </svg>
-                                <ul class="dropdown-menu">
-                                    <!--Rename folder-->
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editFolderForm">
-                                            <i class="bi bi-pencil me-2"></i>Rename
-                                        </a></li>
-                                    <!--Delete folder-->
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash me-2"></i>Delete</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="item-icon">
-                                <svg class="lucide lucide-file w-full h-auto" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-                                    <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-                                </svg>
-                            </div>
-                            <p>Folder name</p>
-                        </div>
-                        <div class="item">
-                            <div class="item-icon">
-                                <svg class="lucide lucide-image w-full h-auto" xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-                                    <circle cx="9" cy="9" r="2"></circle>
-                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
-                                </svg>
-                            </div>
-                            <p>Folder name</p>
-                        </div>
-                        <!--Show all folders that user has-->
+                        <!--Show all folders that user has in their dashboard page-->
                         <%- include('../partials/folder-cards',{folders:folders}) %>
+                            <!--Show all files that user has in their dashboard page-->
+                            <%- include('../partials/file-cards',{files:files}) %>
                     </div>
                     <% } %>
         </div>

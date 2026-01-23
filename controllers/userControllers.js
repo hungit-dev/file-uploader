@@ -100,6 +100,13 @@ const renderDashboardPage = async (req, res) => {
         id: "asc",
       },
     });
+    // find top-level files
+    const files = await prisma.file.findMany({
+      where: { userId: req.user.id, folderId: null },
+      orderBy: {
+        id: "asc",
+      },
+    });
     //Set the parent folder to the dashboard folder
     req.session.currentFolderId = null;
     //Save session before rendering view
@@ -110,7 +117,7 @@ const renderDashboardPage = async (req, res) => {
       }
       return res.render("dashboard-folder-view", {
         username: req.user.name,
-        files: false,
+        files: files,
         folders: folders,
         breadcrumbItems: [{ name: "Dashboard" }],
       });
@@ -133,6 +140,12 @@ const renderFolderView = async (req, res) => {
         id: "asc",
       },
     });
+    const files = await prisma.file.findMany({
+      where: { userId: req.user.id, folderId: parentId },
+      orderBy: {
+        id: "asc",
+      },
+    });
     //set the parent folder to the current rendering folder
     req.session.currentFolderId = parentId;
     //Make sure the session is saved before rendering view
@@ -149,7 +162,7 @@ const renderFolderView = async (req, res) => {
 
       return res.render("dashboard-folder-view", {
         username: req.user.name,
-        files: false,
+        files: files,
         folders: folders,
         breadcrumbItems: breadcrumbItems,
       });
@@ -193,35 +206,51 @@ const logInUser = (req, res, next) => {
 };
 
 const handleUploadFile = async (req, res) => {
-   try {
-   const mimeType = req.file.mimetype;
+  //Image types
+  imageTypes = ["jpg,jpeg", "png", "gif", "bmp", "svg", "webp", "ico", "tiff"];
+  // Video types
+  videoTypes = ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"];
+  //Pdf type
+  pdf = "pdf";
 
-    // Decide resource type
-    let resourceType = 'auto'; // default
-
-    if (mimeType.startsWith('image/')) {
-      resourceType = 'image';
-    } else if (
-      mimeType.startsWith('application/') || 
-      mimeType.startsWith('text/')
-    ) {
-      resourceType = 'raw'; 
-    } else if (mimeType.startsWith('video/')) {
-      resourceType = 'video';
-    }
+  try {
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "uploads",
-      resource_type: resourceType,
+      access_mode: "public",
+      //auto detect file types
+      resource_type: "auto",
     });
     fs.unlinkSync(req.file.path);
-    const url=result.secure_url;
-    const fileName=req.file.originalname;
-    const size=req.file.size;
-    const folderId=req.session.currentFolderId;
-    console.log(req.file)
-    console.log({url,fileName,size,folderId, resourceType})
+    if (!result) throw new Error("Cannot upload");
+    const userId = req.user.id;
+    const url = result.secure_url;
+    const fileName = req.file.originalname;
+    const size = Number(req.file.size);
+    const parentFolderId = req.session.currentFolderId;
+    const fileType = imageTypes.includes(result.format)
+      ? "image"
+      : videoTypes.includes(result.format)
+        ? "video"
+        : "pdf";
+    const file = await prisma.file.create({
+      data: {
+        userId: userId,
+        name: fileName,
+        size: size,
+        fileType: fileType,
+        url: url,
+        folderId: parentFolderId,
+      },
+    });
+    console.log(file);
+    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page after adding a file
+    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+    else res.redirect("/dashboard");
+    // console.log(result);
+    // console.log(req.file);
+    // console.log({ url, fileName, size, folderId, fileType });
   } catch (err) {
-    console.error('File upload error:', err);
+    console.error("File upload error:", err);
     res.status(500).send("File upload failed");
   }
 };
@@ -269,7 +298,15 @@ const editFolder = async (req, res) => {
 const deleteFolder = async (req, res) => {
   try {
     const folderId = Number(req.params.folderId);
-    const parentFolderId = req.session.currentFolderId;
+    // Get the folder's parent before deleting it
+    const folder = await prisma.folder.findUnique({
+      where: { id: folderId },
+    });
+    if (!folder) {
+      return res.status(404).send("Folder not found");
+    }
+    const parentFolderId = folder.parentId;
+    // delete folder
     const deletedFolder = await prisma.folder.delete({
       where: {
         id: folderId,

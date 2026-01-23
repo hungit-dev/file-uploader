@@ -2,7 +2,8 @@ import { prisma } from "./lib/prisma.js";
 
 async function main() {
   // Create a new user with a post
-  await prisma.folder.deleteMany();
+  const folders = await prisma.file.findMany();
+  console.log(folders);
 }
 
 main()

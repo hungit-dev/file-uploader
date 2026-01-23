@@ -26,6 +26,7 @@ model User {
   username String   @unique
   password String
   folder   Folder[]
+  file     File[]
 }
 
 model Folder {
@@ -45,6 +46,9 @@ model File {
   size      BigInt
   createdAt DateTime @default(now())
   url       String
-  folderId  Int
-  folder    Folder   @relation(fields: [folderId], references: [id])
+  fileType String
+  folderId  Int?
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+  folder    Folder?   @relation(fields: [folderId], references: [id],onDelete: Cascade)
 }
