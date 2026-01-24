@@ -40,3 +40,33 @@ document.querySelectorAll(".rename-folder-btn").forEach((button) => {
     input.value = folderName;
   });
 });
+
+//Convert file size in bytes to MB or KB
+function formatFileSize(bytes) {
+  const size = Number(bytes);
+
+  if (size < 1024) {
+    return `${size} B`;
+  } else if (size < 1024 ** 2) {
+    return `${(size / 1024).toFixed(2)} KB`;
+  } else {
+    return `${(size / 1024 ** 2).toFixed(2)} MB`;
+  }
+}
+//dynamic render file info in file-info modal
+document.querySelectorAll(".item").forEach((item) => {
+  item.addEventListener("click", () => {
+    const name = item.dataset.name;
+    const fileType = item.dataset.filetype;
+    const size = item.dataset.size;
+    const createdAt = item.dataset.createdat;
+    const url = item.dataset.url;
+
+    //render values into the modal
+    document.querySelector(".file-name").textContent = name;
+    document.querySelector(".file-url").href = url;
+    document.querySelector(".file-size").textContent = formatFileSize(size);
+    document.querySelector(".file-type").textContent = fileType;
+    document.querySelector(".file-date-create").textContent = createdAt;
+  });
+});

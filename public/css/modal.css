@@ -1,59 +1,74 @@
 .upload-modal .modal-header,
 .upload-modal .modal-footer,
 .file-info-modal .modal-header {
-    border: none;
+  border: none;
 }
 
 .upload-modal button[type="submit"],
 .create-folder-modal button[type="submit"] {
-    background-color: #65A30D;
-    color: white;
+  background-color: #65a30d;
+  color: white;
 }
 
 .create-folder-modal .modal-dialog {
-    margin-top: 200px;
-    max-width: 400px;
+  margin-top: 200px;
+  max-width: 400px;
 }
 
-
-
 .create-folder-modal .modal-header {
-    border: none;
+  border: none;
 }
 
 .file-info-modal .modal-dialog {
-    max-width: 400px;
+  max-width: 380px;
 }
 
 .fields {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .file-info-modal .field {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .file-info-modal .fields .field p:nth-child(1) {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-.file-info-modal p.cloud-drive-url {
-    color: #65A30D;
-    cursor: pointer;
+.file-info-modal a.file-url {
+  color: #65a30d;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .file-info-modal p.cloud-drive-url:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .file-info-modal .modal-footer span {
-    padding: 3px;
+  padding: 3px;
 }
 
 .file-info-modal .modal-footer span:hover {
-    background-color: #E4E4E7;
-    cursor: pointer;
+  background-color: #e4e4e7;
+  cursor: pointer;
+}
+
+/*  Reduce margin-top and width on file-info modal for laptop and phone screens */
+@media (max-width: 1600px) {
+  .file-info-modal {
+    margin-top: 40px;
+  }
+
+  .file-info-modal .modal-dialog {
+    margin: 0 auto;
+  }
+}
+@media (max-width: 450px) {
+  .file-info-modal .modal-dialog {
+    max-width: 85%;
+  }
 }

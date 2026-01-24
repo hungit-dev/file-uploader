@@ -232,10 +232,10 @@ const handleUploadFile = async (req, res) => {
     const size = Number(req.file.size);
     const parentFolderId = req.session.currentFolderId;
     const fileType = imageTypes.includes(result.format)
-      ? "image"
+      ? "Image"
       : videoTypes.includes(result.format)
-        ? "video"
-        : "pdf";
+        ? "Video"
+        : "Pdf";
     const file = await prisma.file.create({
       data: {
         userId: userId,

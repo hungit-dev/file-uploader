@@ -1,8 +1,10 @@
 <% if (files) { %>
     <%files.forEach((file)=>{ %>
-        <div class="item">
+        <div class="item" data-bs-toggle="modal" data-bs-target="#fileInfo" data-name="<%= file.name%>"
+            data-fileType="<%=file.fileType%>" data-size="<%= file.size%>" data-createdAt="<%= file.createdAt%>"
+            data-url="<%= file.url%>">
             <div class="item-icon">
-                <% if (file.fileType==="video" ) { %>
+                <% if (file.fileType==="Video" ) { %>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-file-video-camera-icon lucide-file-video-camera">
@@ -12,7 +14,7 @@
                         <path d="m10 17.843 3.033-1.755a.64.64 0 0 1 .967.56v4.704a.65.65 0 0 1-.967.56L10 20.157" />
                         <rect width="7" height="6" x="3" y="16" rx="1" />
                     </svg>
-                    <% } else if (file.fileType==="image" ) { %>
+                    <% } else if (file.fileType==="Image" ) { %>
                         <svg class="lucide lucide-image w-full h-auto" xmlns="http://www.w3.org/2000/svg" width="20"
                             height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
                             stroke-linecap="round" stroke-linejoin="round">
