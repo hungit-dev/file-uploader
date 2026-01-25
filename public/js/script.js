@@ -61,6 +61,7 @@ document.querySelectorAll(".item").forEach((item) => {
     const size = item.dataset.size;
     const createdAt = item.dataset.createdat;
     const url = item.dataset.url;
+    const fileId = item.dataset.fileid;
 
     //render values into the modal
     document.querySelector(".file-name").textContent = name;
@@ -68,5 +69,18 @@ document.querySelectorAll(".item").forEach((item) => {
     document.querySelector(".file-size").textContent = formatFileSize(size);
     document.querySelector(".file-type").textContent = fileType;
     document.querySelector(".file-date-create").textContent = createdAt;
+
+    //Direct to delete endpoint when clicking delete btn
+    document
+      .querySelector("span.delete-file-btn")
+      .addEventListener("click", () => {
+        window.location.href = `/dashboard/files/${fileId}`;
+      });
+    //Direct to download file endpoint when clicking download btn
+    document
+      .querySelector("span.download-file-btn")
+      .addEventListener("click", () => {
+        window.location.href = `/dashboard/files/${fileId}/download`;
+      });
   });
 });

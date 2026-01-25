@@ -2,7 +2,7 @@
     <%files.forEach((file)=>{ %>
         <div class="item" data-bs-toggle="modal" data-bs-target="#fileInfo" data-name="<%= file.name%>"
             data-fileType="<%=file.fileType%>" data-size="<%= file.size%>" data-createdAt="<%= file.createdAt%>"
-            data-url="<%= file.url%>">
+            data-url="<%= file.url%>" data-fileId="<%=file.id%>">
             <div class="item-icon">
                 <% if (file.fileType==="Video" ) { %>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

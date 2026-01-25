@@ -12,6 +12,7 @@ html[data-bs-theme="dark"] {
   --sign-up-btn-color: black;
   --theme-toggler-text-color: rgba(255, 255, 255, 0.65);
   --dropdown-icon-color-hover: white;
+  --hover-delete-download-file-btn: #343a40;
 }
 
 html[data-bs-theme="light"] {
@@ -28,6 +29,7 @@ html[data-bs-theme="light"] {
   --sign-up-btn-color: white;
   --theme-toggler-text-color: rgba(0, 0, 0, 0.65);
   --dropdown-icon-color-hover: dark;
+  --hover-delete-download-file-btn: #e4e4e7;
 }
 
 html {

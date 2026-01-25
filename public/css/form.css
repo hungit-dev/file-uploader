@@ -1,32 +1,31 @@
 html[data-bs-theme="dark"] form input[class="form-control"] {
-    background-color: #27272A;
-
+  background-color: #27272a;
 }
 
 html form input[class="form-control"]:focus {
-    box-shadow: none;
-    border-color: #65A30D;
+  box-shadow: none;
+  border-color: #65a30d;
 }
 
-
 main div[class="container"] {
-    max-width: 500px;
+  max-width: 500px;
+  margin-top: 50px;
 }
 
 main form button[type="submit"] {
-    --bs-btn-bg: #65A30D;
-    border: none;
+  --bs-btn-bg: #65a30d;
+  border: none;
 }
 
 main form button[type="submit"]:hover {
-    --bs-btn-hover-bg: #4D7C0F;
+  --bs-btn-hover-bg: #4d7c0f;
 }
 
 main form button[type="submit"]:active {
-    --bs-btn-active-bg: #3F6212;
+  --bs-btn-active-bg: #3f6212;
 }
 
 main form button[type="submit"]:focus {
-    background-color: #65A30D;
-    box-shadow: none;
+  background-color: #65a30d;
+  box-shadow: none;
 }

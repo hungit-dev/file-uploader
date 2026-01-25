@@ -14,7 +14,9 @@ const {
   createNewFolder,
   editFolder,
   deleteFolder,
-} = require("../controllers/userControllers");
+  deleteFile,
+  downloadFile,
+} = require("../controllers/controllers");
 
 //implements multer to access uploaded files
 const multer = require("multer");
@@ -50,5 +52,7 @@ indexRouter.get("/log-out", (req, res, next) => {
 indexRouter.get("/dashboard/folders/:folderId/delete", deleteFolder);
 indexRouter.post("/dashboard/folders/create-folder", createNewFolder);
 indexRouter.post("/dashboard/folders/:folderId/edit-folder", editFolder);
+indexRouter.get("/dashboard/files/:fileId", deleteFile);
+indexRouter.get("/dashboard/files/:fileId/download", downloadFile);
 
 module.exports = indexRouter;

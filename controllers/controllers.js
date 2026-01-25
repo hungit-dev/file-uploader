@@ -1,9 +1,9 @@
 const { prisma } = require("../lib/prisma.js");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
-const passport = require("../passport-config");
+const passport = require("../passport-config.js");
 const { getFolderHierarchy } = require("../models/folder.js");
-const cloudinary = require("../cloudinary-config");
+const cloudinary = require("../cloudinary-config.js");
 const fs = require("fs");
 
 const validateSignUpForm = [
@@ -211,7 +211,17 @@ const logInUser = (req, res, next) => {
 
 const handleUploadFile = async (req, res) => {
   //Image types
-  imageTypes = ["jpg,jpeg", "png", "gif", "bmp", "svg", "webp", "ico", "tiff"];
+  imageTypes = [
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "bmp",
+    "svg",
+    "webp",
+    "ico",
+    "tiff",
+  ];
   // Video types
   videoTypes = ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"];
   //Pdf type
@@ -324,6 +334,43 @@ const deleteFolder = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+const deleteFile = async (req, res) => {
+  try {
+    const fileId = Number(req.params.fileId);
+    const file = await prisma.file.delete({
+      where: {
+        id: fileId,
+      },
+    });
+    const parentFolderId = req.session.currentFolderId;
+    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
+    else res.redirect("/dashboard");
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Server error");
+  }
+};
+const downloadFile = async (req, res) => {
+  try {
+    const fileId = Number(req.params.fileId);
+    const file = await prisma.file.findUnique({
+      where: { id: fileId },
+    });
+    if (!file) {
+      return res.status(404).send("File not found");
+    }
+    // Verify the file belongs to the current user
+    if (file.userId !== req.user.id) {
+      return res.status(403).send("Access denied");
+    }
+    // Insert fl_attachment into Cloudinary URL
+    const downloadUrl = file.url.replace("/upload/", "/upload/fl_attachment/");
+    res.redirect(downloadUrl);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Download failed");
+  }
+};
 module.exports = {
   validateSignUpForm,
   renderIndexPage,
@@ -338,4 +385,6 @@ module.exports = {
   createNewFolder,
   editFolder,
   deleteFolder,
+  deleteFile,
+  downloadFile,
 };

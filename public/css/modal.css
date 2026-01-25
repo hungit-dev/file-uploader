@@ -42,6 +42,7 @@
   color: #65a30d;
   cursor: pointer;
   text-decoration: none;
+  margin-bottom: 16px;
 }
 
 .file-info-modal p.cloud-drive-url:hover {
@@ -53,7 +54,7 @@
 }
 
 .file-info-modal .modal-footer span:hover {
-  background-color: #e4e4e7;
+  background-color: var(--hover-delete-download-file-btn);
   cursor: pointer;
 }
 
