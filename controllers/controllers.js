@@ -90,6 +90,12 @@ const renderLogInPage = (req, res) => {
 
 const renderDashboardPage = async (req, res) => {
   try {
+    //authorize user
+    if (!req.user)
+      return res.send(
+        "You are not authorized to go to this route. Please log in!",
+      );
+
     // Prevent caching to ensure back button reloads the page
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
     const folders = await prisma.folder.findMany({
@@ -132,6 +138,11 @@ const renderDashboardPage = async (req, res) => {
 
 const renderFolderView = async (req, res) => {
   try {
+    //authorize user
+    if (!req.user)
+      return res.send(
+        "You are not authorized to go to this route. Please log in!",
+      );
     // Prevent caching to ensure back button reloads the page
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
     const parentId = Number(req.params.parentId);
@@ -365,6 +376,7 @@ const downloadFile = async (req, res) => {
     }
     // Insert fl_attachment into Cloudinary URL
     const downloadUrl = file.url.replace("/upload/", "/upload/fl_attachment/");
+
     res.redirect(downloadUrl);
   } catch (e) {
     console.log(e);
