@@ -59,7 +59,7 @@ document.querySelectorAll(".item").forEach((item) => {
     const name = item.dataset.name;
     const fileType = item.dataset.filetype;
     const size = item.dataset.size;
-    const createdAt = item.dataset.createdat;
+    const createdAt = new Date(item.dataset.createdat).toLocaleString();
     const url = item.dataset.url;
     const fileId = item.dataset.fileid;
 
