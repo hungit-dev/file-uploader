@@ -350,9 +350,7 @@ const deleteFolder = async (req, res) => {
         id: folderId,
       },
     });
-    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page
-    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
-    else res.redirect("/dashboard");
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     res.status(500).send("Server error");
@@ -366,9 +364,7 @@ const deleteFile = async (req, res) => {
         id: fileId,
       },
     });
-    const parentFolderId = req.session.currentFolderId;
-    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
-    else res.redirect("/dashboard");
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     res.status(500).send("Server error");

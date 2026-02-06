@@ -70,11 +70,22 @@ document.querySelectorAll(".item").forEach((item) => {
     document.querySelector(".file-type").textContent = fileType;
     document.querySelector(".file-date-create").textContent = createdAt;
 
-    //Direct to delete endpoint when clicking delete btn
+    //Handle delete file request
     document
       .querySelector("span.delete-file-btn")
-      .addEventListener("click", () => {
-        window.location.href = `/dashboard/files/${fileId}`;
+      .addEventListener("click", async () => {
+        try {
+          const res = await fetch(`/dashboard/files/${fileId}`, {
+            method: "DELETE",
+          });
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            console.error("Failed to delete file");
+          }
+        } catch (err) {
+          console.log(err);
+        }
       });
     //Direct to download file endpoint when clicking download btn
     document
@@ -84,3 +95,24 @@ document.querySelectorAll(".item").forEach((item) => {
       });
   });
 });
+
+//Handle delete folder request
+ document.querySelectorAll(".delete-folder-btn").forEach(button => {
+    button.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const folderId = button.dataset.folderId;
+      try {
+        const res = await fetch(`/dashboard/folders/${folderId}/delete`, {
+          method: "DELETE",
+        });
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to delete folder");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  });
+

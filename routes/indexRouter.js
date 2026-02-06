@@ -42,10 +42,10 @@ indexRouter.get("/log-out", (req, res, next) => {
     res.redirect("/");
   });
 });
-indexRouter.get("/dashboard/folders/:folderId/delete", deleteFolder);
+indexRouter.delete("/dashboard/folders/:folderId/delete", deleteFolder);
 indexRouter.post("/dashboard/folders/create-folder", createNewFolder);
 indexRouter.post("/dashboard/folders/:folderId/edit-folder", editFolder);
-indexRouter.get("/dashboard/files/:fileId", deleteFile);
+indexRouter.delete("/dashboard/files/:fileId", deleteFile);
 indexRouter.get("/dashboard/files/:fileId/download", downloadFile);
 
 module.exports = indexRouter;
