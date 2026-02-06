@@ -221,8 +221,8 @@ const logInUser = (req, res, next) => {
 };
 
 const handleUploadFile = async (req, res) => {
-  //Image types
-  imageTypes = [
+  // Image types
+  const imageTypes = [
     "jpg",
     "jpeg",
     "png",
@@ -233,30 +233,44 @@ const handleUploadFile = async (req, res) => {
     "ico",
     "tiff",
   ];
+
   // Video types
-  videoTypes = ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"];
-  //Pdf type
-  pdf = "pdf";
+  const videoTypes = ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"];
 
   try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "uploads",
-      access_mode: "public",
-      //auto detect file types
-      resource_type: "auto",
+    if (!req.file) throw new Error("No file uploaded");
+
+    // Upload to Cloudinary directly from memory buffer
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "uploads",
+          access_mode: "public",
+          resource_type: "auto",
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        },
+      );
+
+      stream.end(req.file.buffer);
     });
-    fs.unlinkSync(req.file.path);
+
     if (!result) throw new Error("Cannot upload");
+
     const userId = req.user.id;
     const url = result.secure_url;
     const fileName = req.file.originalname;
     const size = Number(req.file.size);
     const parentFolderId = req.session.currentFolderId;
+
     const fileType = imageTypes.includes(result.format)
       ? "Image"
       : videoTypes.includes(result.format)
         ? "Video"
         : "Pdf";
+
     const file = await prisma.file.create({
       data: {
         userId: userId,
@@ -267,13 +281,12 @@ const handleUploadFile = async (req, res) => {
         folderId: parentFolderId,
       },
     });
+
     console.log(file);
-    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page after adding a file
+
+    // Redirect to correct folder
     if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
     else res.redirect("/dashboard");
-    // console.log(result);
-    // console.log(req.file);
-    // console.log({ url, fileName, size, folderId, fileType });
   } catch (err) {
     console.error("File upload error:", err);
     res.status(500).send("File upload failed");
