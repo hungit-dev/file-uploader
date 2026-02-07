@@ -116,3 +116,28 @@ document.querySelectorAll(".item").forEach((item) => {
     });
   });
 
+//Handle edit folder request
+const editFolderForm = document.getElementById("editFolderForm");
+if (editFolderForm) {
+  editFolderForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(editFolderForm);
+    try {
+      const res = await fetch(editFolderForm.action, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(formData),
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        console.error("Failed to edit folder");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+

@@ -44,7 +44,7 @@ indexRouter.get("/log-out", (req, res, next) => {
 });
 indexRouter.delete("/dashboard/folders/:folderId/delete", deleteFolder);
 indexRouter.post("/dashboard/folders/create-folder", createNewFolder);
-indexRouter.post("/dashboard/folders/:folderId/edit-folder", editFolder);
+indexRouter.put("/dashboard/folders/:folderId/edit-folder", editFolder);
 indexRouter.delete("/dashboard/files/:fileId", deleteFile);
 indexRouter.get("/dashboard/files/:fileId/download", downloadFile);
 

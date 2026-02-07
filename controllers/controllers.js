@@ -236,10 +236,8 @@ const handleUploadFile = async (req, res) => {
 
   // Video types
   const videoTypes = ["mp4", "mov", "avi", "wmv", "webm", "flv", "mkv"];
-
   try {
     if (!req.file) throw new Error("No file uploaded");
-
     // Upload to Cloudinary directly from memory buffer
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
@@ -253,24 +251,19 @@ const handleUploadFile = async (req, res) => {
           else resolve(result);
         },
       );
-
       stream.end(req.file.buffer);
     });
-
     if (!result) throw new Error("Cannot upload");
-
     const userId = req.user.id;
     const url = result.secure_url;
     const fileName = req.file.originalname;
     const size = Number(req.file.size);
     const parentFolderId = req.session.currentFolderId;
-
     const fileType = imageTypes.includes(result.format)
       ? "Image"
       : videoTypes.includes(result.format)
         ? "Video"
         : "Pdf";
-
     const file = await prisma.file.create({
       data: {
         userId: userId,
@@ -281,9 +274,7 @@ const handleUploadFile = async (req, res) => {
         folderId: parentFolderId,
       },
     });
-
     console.log(file);
-
     // Redirect to correct folder
     if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
     else res.redirect("/dashboard");
@@ -315,7 +306,6 @@ const createNewFolder = async (req, res) => {
 };
 const editFolder = async (req, res) => {
   try {
-    const parentFolderId = req.session.currentFolderId;
     const folderId = Number(req.params.folderId);
     const folder = await prisma.folder.update({
       where: {
@@ -325,9 +315,7 @@ const editFolder = async (req, res) => {
         name: req.body["folder-name"],
       },
     });
-    //redirect to the current subfolder if user is in subfolder, else redirect to dashboard page
-    if (parentFolderId) res.redirect(`/dashboard/folders/${parentFolderId}`);
-    else res.redirect("/dashboard");
+    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     res.status(500).send("Server error");
