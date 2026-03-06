@@ -169,7 +169,6 @@ const renderFolderView = async (req, res) => {
         console.log("Session save error:", err);
         return res.status(500).send("Server error");
       }
-      //test
       const breadcrumbItems = await getFolderHierarchy(
         req.user.id,
         req.session.currentFolderId,
